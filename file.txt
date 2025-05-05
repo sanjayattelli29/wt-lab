@@ -41,6 +41,7 @@ mysql-password.txt:
 https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/mysql-password.txt
 
 crud-operations.txt only mysql
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/crud.txt
 
 
 
