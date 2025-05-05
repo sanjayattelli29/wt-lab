@@ -124,11 +124,55 @@ Tell mam:
 
 ### 🔹 2. Create Dummy Console Output (Optional)
 
-```java
-System.out.println("Connecting to DB...");
-System.out.println("Fetching books...");
-System.out.println("Displaying in content frame...");
+To create and display this dummy console output in a simple program, you can use **Java**, as your code snippet suggests.
+
+### 🟨 Step-by-Step Instructions:
+
+#### 1. **Create a File**
+
+Create a Java file with a name that matches the class name. For example, if your class is named `BookApp`, then the file must be named:
+
 ```
+BookApp.java
+```
+
+#### 2. **Write the Java Code**
+
+Here’s a complete minimal Java program using your console output:
+
+```java
+public class BookApp {
+    public static void main(String[] args) {
+        System.out.println("Connecting to DB...");
+        System.out.println("Fetching books...");
+        System.out.println("Displaying in content frame...");
+    }
+}
+```
+
+#### 3. **Compile and Run (Optional for Actual Output)**
+
+If you want to see the output:
+
+* **Compile**:
+
+  ```
+  javac BookApp.java
+  ```
+* **Run**:
+
+  ```
+  java BookApp
+  ```
+
+#### ✅ Output:
+
+```
+Connecting to DB...
+Fetching books...
+Displaying in content frame...
+```
+
 
 Open console during viva → paste these for effect.
 
