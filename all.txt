@@ -1,0 +1,2206 @@
+
+https://dev.mysql.com/downloads/installer/
+
+
+version 8.0.11
+
+
+
+
+
+Week 5:
+XML Structure and Design : 
+
+### 1. **Create the XML File (book_catalog.xml)**
+
+First, create the `book_catalog.xml` file with the following structure:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<bookCatalog>
+    <book>
+        <title>Introduction to Java</title>
+        <author>John Doe</author>
+        <genre>Programming</genre>
+        <price>29.99</price>
+        <availability>In Stock</availability>
+    </book>
+    <book>
+        <title>Advanced Python</title>
+        <author>Jane Smith</author>
+        <genre>Programming</genre>
+        <price>35.50</price>
+        <availability>Out of Stock</availability>
+    </book>
+    <book>
+        <title>Data Structures and Algorithms</title>
+        <author>Michael Brown</author>
+        <genre>Computer Science</genre>
+        <price>42.75</price>
+        <availability>In Stock</availability>
+    </book>
+</bookCatalog>
+```
+
+### 2. **Create the Java Code to Read the XML (BookCatalog.java)**
+
+Now, let's write Java code to read and display the contents of this XML file. We'll use `DocumentBuilder` and `NodeList` to parse and extract data from the XML.
+
+**BookCatalog.java**
+
+```java
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.*;
+
+public class BookCatalog {
+    public static void main(String[] args) {
+        try {
+            // Load the XML file
+            File inputFile = new File("book_catalog.xml");
+
+            // Create a DocumentBuilderFactory object to parse the XML file
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            // Parse the file and load it into a Document object
+            Document doc = builder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+
+            // Get the list of books in the catalog
+            NodeList nodeList = doc.getElementsByTagName("book");
+
+            // Iterate through the list and print book details
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) node;
+                    
+                    // Extract details of each book
+                    String title = element.getElementsByTagName("title").item(0).getTextContent();
+                    String author = element.getElementsByTagName("author").item(0).getTextContent();
+                    String genre = element.getElementsByTagName("genre").item(0).getTextContent();
+                    String price = element.getElementsByTagName("price").item(0).getTextContent();
+                    String availability = element.getElementsByTagName("availability").item(0).getTextContent();
+
+                    // Display the details
+                    System.out.println("Book Title: " + title);
+                    System.out.println("Author: " + author);
+                    System.out.println("Genre: " + genre);
+                    System.out.println("Price: $" + price);
+                    System.out.println("Availability: " + availability);
+                    System.out.println("---------------");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 3. **Steps to Execute the Program**
+
+#### a. **Setting Up the Environment**
+
+* Install Java (JDK) on your system if it's not already installed.
+* You can download it from the official [Java website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+* Use any IDE (like IntelliJ IDEA, Eclipse) or a simple text editor (like VS Code) to write your code.
+
+#### b. **Place the XML File**
+
+* Ensure that the `book_catalog.xml` file is located in the same directory as your Java file (`BookCatalog.java`), or you can provide the full path to the XML file in the code.
+
+#### c. **Compile and Run the Program**
+
+* Open a terminal or command prompt.
+* Navigate to the directory where `BookCatalog.java` is located.
+* Compile the Java code:
+
+  ```sh
+  javac BookCatalog.java
+  ```
+* Run the Java program:
+
+  ```sh
+  java BookCatalog
+  ```
+
+### 4. **Expected Output**
+
+If everything is set up correctly, running the program will output the details of each book in the catalog:
+
+```
+Book Title: Introduction to Java
+Author: John Doe
+Genre: Programming
+Price: $29.99
+Availability: In Stock
+---------------
+Book Title: Advanced Python
+Author: Jane Smith
+Genre: Programming
+Price: $35.50
+Availability: Out of Stock
+---------------
+Book Title: Data Structures and Algorithms
+Author: Michael Brown
+Genre: Computer Science
+Price: $42.75
+Availability: In Stock
+---------------
+```
+
+### 5. **Explanation**
+
+* **XML Structure**: The XML structure contains a root element `<bookCatalog>`, and within it, multiple `<book>` elements. Each `<book>` has a title, author, genre, price, and availability.
+* **Java Code**: The Java program parses the XML file, reads each `<book>` element, and prints the details of each book.
+
+
+Week 6 :
+User Account XML
+
+ 1. XML Structure (user\_accounts.xml)
+
+Here's the XML structure you can use to store user account information. The password will be represented as an encrypted value (you can replace the actual encrypted data later in a real-world application).
+
+```xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<userAccounts>
+    <user>
+        <username>johndoe</username>
+        <password>encryptedPassword12345</password> <!-- Encrypted password -->
+        <email>johndoe@example.com</email>
+        <purchaseHistory>
+            <purchase>
+                <itemID>123</itemID>
+                <itemName>Introduction to Java</itemName>
+                <purchaseDate>2025-05-01</purchaseDate>
+                <price>29.99</price>
+            </purchase>
+            <purchase>
+                <itemID>456</itemID>
+                <itemName>Advanced Python</itemName>
+                <purchaseDate>2025-05-03</purchaseDate>
+                <price>35.50</price>
+            </purchase>
+        </purchaseHistory>
+    </user>
+
+    <user>
+        <username>janesmith</username>
+        <password>encryptedPassword67890</password> <!-- Encrypted password -->
+        <email>janesmith@example.com</email>
+        <purchaseHistory>
+            <purchase>
+                <itemID>789</itemID>
+                <itemName>Data Structures and Algorithms</itemName>
+                <purchaseDate>2025-05-02</purchaseDate>
+                <price>42.75</price>
+            </purchase>
+        </purchaseHistory>
+    </user>
+</userAccounts>
+```
+
+### Explanation of the XML Structure:
+
+* **`<userAccounts>`**: The root element, which contains all user account entries.
+* **`<user>`**: Each user account is stored within a `<user>` element.
+
+  * **`<username>`**: The username of the user.
+  * **`<password>`**: The password is stored in an encrypted format. In a real-world application, you should never store plain-text passwords. They should be hashed/encrypted.
+  * **`<email>`**: The user's email address.
+  * **`<purchaseHistory>`**: The history of purchases made by the user.
+
+    * **`<purchase>`**: Each individual purchase entry.
+
+      * **`<itemID>`**: A unique identifier for the purchased item.
+      * **`<itemName>`**: The name of the purchased item.
+      * **`<purchaseDate>`**: The date of the purchase.
+      * **`<price>`**: The price of the item at the time of purchase.
+
+### 2. **Java Code to Read the User Account XML (UserAccountReader.java)**
+
+Now, let's write Java code to read and display the user account information from this XML.
+
+**UserAccountReader.java**
+
+```java
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.*;
+
+public class UserAccountReader {
+    public static void main(String[] args) {
+        try {
+            // Load the XML file
+            File inputFile = new File("user_accounts.xml");
+
+            // Create a DocumentBuilderFactory object to parse the XML file
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            // Parse the file and load it into a Document object
+            Document doc = builder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+
+            // Get the list of users in the account catalog
+            NodeList nodeList = doc.getElementsByTagName("user");
+
+            // Iterate through the list and print user details
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) node;
+
+                    // Extract user details
+                    String username = element.getElementsByTagName("username").item(0).getTextContent();
+                    String password = element.getElementsByTagName("password").item(0).getTextContent();
+                    String email = element.getElementsByTagName("email").item(0).getTextContent();
+
+                    // Print user details
+                    System.out.println("Username: " + username);
+                    System.out.println("Encrypted Password: " + password);
+                    System.out.println("Email: " + email);
+                    System.out.println("Purchase History:");
+
+                    // Extract purchase history
+                    NodeList purchaseList = element.getElementsByTagName("purchase");
+                    for (int j = 0; j < purchaseList.getLength(); j++) {
+                        Node purchaseNode = purchaseList.item(j);
+                        if (purchaseNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element purchaseElement = (Element) purchaseNode;
+                            String itemName = purchaseElement.getElementsByTagName("itemName").item(0).getTextContent();
+                            String purchaseDate = purchaseElement.getElementsByTagName("purchaseDate").item(0).getTextContent();
+                            String price = purchaseElement.getElementsByTagName("price").item(0).getTextContent();
+
+                            System.out.println("\tItem: " + itemName);
+                            System.out.println("\tPurchase Date: " + purchaseDate);
+                            System.out.println("\tPrice: $" + price);
+                        }
+                    }
+
+                    System.out.println("---------------");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 3. **Steps to Execute the Program**
+
+#### a. **Setting Up the Environment**
+
+* Ensure Java is installed on your system.
+* Use any IDE (like IntelliJ IDEA, Eclipse) or a simple text editor (like VS Code).
+
+#### b. **Place the XML File**
+
+* Ensure the `user_accounts.xml` file is in the same directory as `UserAccountReader.java`, or adjust the path in the code accordingly.
+
+#### c. **Compile and Run the Program**
+
+* Open a terminal or command prompt.
+* Navigate to the directory where `UserAccountReader.java` is located.
+* Compile the Java code:
+
+  ```sh
+  javac UserAccountReader.java
+  ```
+* Run the Java program:
+
+  ```sh
+  java UserAccountReader
+  ```
+
+### 4. **Expected Output**
+
+If everything is set up correctly, the program will print out the details of each user and their purchase history:
+
+```
+Username: johndoe
+Encrypted Password: encryptedPassword12345
+Email: johndoe@example.com
+Purchase History:
+    Item: Introduction to Java
+    Purchase Date: 2025-05-01
+    Price: $29.99
+    Item: Advanced Python
+    Purchase Date: 2025-05-03
+    Price: $35.50
+---------------
+Username: janesmith
+Encrypted Password: encryptedPassword67890
+Email: janesmith@example.com
+Purchase History:
+    Item: Data Structures and Algorithms
+    Purchase Date: 2025-05-02
+    Price: $42.75
+---------------
+```
+
+### 5. **Explanation**
+
+* **XML Structure**: The XML file holds multiple user accounts, each with a username, encrypted password, email, and purchase history.
+* **Java Code**: The Java program reads and extracts data from the XML file and prints the details of each user, including their purchase history.
+
+
+week 8 :
+Servlet for Book Retrieval
+For **Week 8**, you are tasked with developing a **Servlet** that retrieves book information from a database and sends it to a content frame. Below, I will guide you through setting up the servlet and the database interaction, and how the information is retrieved and sent to the client.
+
+### Prerequisites:
+
+1. **Database**: A MySQL database that contains the book information.
+2. **Servlet Container**: You will need a servlet container like **Apache Tomcat** or **Jetty**.
+3. **JDBC Setup**: Java Database Connectivity (JDBC) to connect to your MySQL database.
+4. **IDE**: Any IDE that supports Java EE development, like **IntelliJ IDEA** or **Eclipse**.
+
+### 1. **Create the MySQL Database and Table**
+
+First, you need a MySQL database that holds book information. Here's an example of how you can set up the database and table.
+
+**SQL Query to create database and table:**
+
+```sql
+CREATE DATABASE BookStore;
+
+USE BookStore;
+
+CREATE TABLE books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    author VARCHAR(255),
+    genre VARCHAR(100),
+    price DECIMAL(10, 2),
+    availability VARCHAR(50)
+);
+
+-- Insert some sample data into the books table
+INSERT INTO books (title, author, genre, price, availability)
+VALUES
+    ('Introduction to Java', 'John Doe', 'Programming', 29.99, 'In Stock'),
+    ('Advanced Python', 'Jane Smith', 'Programming', 35.50, 'Out of Stock'),
+    ('Data Structures and Algorithms', 'Michael Brown', 'Computer Science', 42.75, 'In Stock');
+```
+
+### 2. **JDBC Setup (Database Connection)**
+
+For your servlet to interact with the database, you will need to set up JDBC. Here’s how you can configure the connection.
+
+**Add JDBC Driver to Your Project:**
+
+If you're using Maven, add the MySQL connector dependency in the `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.30</version> <!-- Check for the latest version -->
+</dependency>
+```
+
+If you're not using Maven, download the **MySQL Connector/J** and add it to your project’s `lib` folder.
+
+**Database Connection Utility:**
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnection {
+    public static Connection getConnection() throws SQLException {
+        try {
+            // Load the MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connect to the database
+            return DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/BookStore", "root", "password");  // Replace with your DB credentials
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new SQLException("Error connecting to the database", e);
+        }
+    }
+}
+```
+
+### 3. **Servlet for Book Retrieval**
+
+Now, we’ll develop a servlet that retrieves book information from the database and sends it to a content frame (in this case, an HTML page). This servlet will query the database, retrieve the book details, and display them on a webpage.
+
+**BookServlet.java**
+
+```java
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class BookServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Set the response content type
+        response.setContentType("text/html");
+
+        // Get the PrintWriter to write the response
+        PrintWriter out = response.getWriter();
+
+        try {
+            // Get database connection
+            Connection conn = DatabaseConnection.getConnection();
+            
+            // Query to retrieve books from the database
+            String query = "SELECT * FROM books";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            // HTML for the content frame (table to display books)
+            out.println("<html><body>");
+            out.println("<h1>Book List</h1>");
+            out.println("<table border='1'>");
+            out.println("<tr><th>Title</th><th>Author</th><th>Genre</th><th>Price</th><th>Availability</th></tr>");
+
+            // Iterate over the result set and display book details
+            while (rs.next()) {
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String genre = rs.getString("genre");
+                double price = rs.getDouble("price");
+                String availability = rs.getString("availability");
+
+                out.println("<tr>");
+                out.println("<td>" + title + "</td>");
+                out.println("<td>" + author + "</td>");
+                out.println("<td>" + genre + "</td>");
+                out.println("<td>$" + price + "</td>");
+                out.println("<td>" + availability + "</td>");
+                out.println("</tr>");
+            }
+
+            // Close the table and other HTML tags
+            out.println("</table>");
+            out.println("</body></html>");
+
+            // Close database resources
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            out.println("<p>Error retrieving book data: " + e.getMessage() + "</p>");
+        } finally {
+            out.close();
+        }
+    }
+}
+```
+
+### 4. **Servlet Mapping in `web.xml`**
+
+To map this servlet, you'll need to configure it in the `web.xml` file of your web application.
+
+**web.xml (Deployment Descriptor)**
+
+```xml
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+    
+    <servlet>
+        <servlet-name>BookServlet</servlet-name>
+        <servlet-class>BookServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BookServlet</servlet-name>
+        <url-pattern>/bookList</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
+
+### 5. **Steps to Execute the Servlet**
+
+1. **Set Up Your Web Application**: Use an IDE like **IntelliJ IDEA** or **Eclipse** to create a web application with servlet support.
+2. **Database Connection**: Make sure your MySQL server is running and the `BookStore` database is set up with the table and data.
+3. **Deploy to Tomcat**: Deploy your servlet to a servlet container like **Apache Tomcat**.
+4. **Run the Servlet**: Once your servlet is deployed, you can access it in the browser by going to:
+
+   ```
+   http://localhost:8080/YourAppName/bookList
+   ```
+
+### 6. **Expected Output (in Browser)**
+
+If everything is set up correctly, the browser will display a table of books retrieved from the database:
+
+```
++---------------------------+
+|       Book List            |
++---------------------------+
+| Title                     | Author      | Genre            | Price | Availability |
++---------------------------+-------------+------------------+-------+--------------+
+| Introduction to Java       | John Doe    | Programming      | 29.99 | In Stock     |
+| Advanced Python            | Jane Smith  | Programming      | 35.50 | Out of Stock |
+| Data Structures and Algo   | Michael Brown | Computer Science | 42.75 | In Stock     |
++---------------------------+-------------+------------------+-------+--------------+
+```
+
+### 7. **Explanation of Code:**
+
+* **Servlet**: The `BookServlet` retrieves all book records from the `books` table in the database and formats the data into an HTML table.
+* **JDBC**: The servlet uses `JDBC` to connect to the MySQL database and execute an SQL query.
+* **`web.xml`**: The servlet is mapped to the `/bookList` URL pattern, making it accessible from the browser.
+
+This setup should allow you to retrieve book information from a database and display it in a content frame.
+
+
+week 9 :
+User Authentication
+For **Week 9**, we are going to implement **user authentication** using **Servlets** and **JSP (JavaServer Pages)**. We'll create a login page, authenticate users based on stored credentials, and restrict access to certain pages for authenticated users.
+
+### Overview
+
+1. **Login Page**: A simple HTML form where users input their username and password.
+2. **Authentication Servlet**: Validates the user's credentials against a database.
+3. **Restricted Access**: Restricts access to certain pages for authenticated users by checking session variables.
+
+### 1. **Database Setup**
+
+Before proceeding with the authentication, let's assume we have a `users` table in our database that holds the user credentials. The database schema for the `users` table is as follows:
+
+```sql
+CREATE DATABASE UserDB;
+
+USE UserDB;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Sample user data
+INSERT INTO users (username, password) VALUES ('john_doe', 'password123');
+INSERT INTO users (username, password) VALUES ('jane_smith', 'mypassword456');
+```
+
+### 2. **JDBC Utility Class (Database Connection)**
+
+Create a utility class that will provide the database connection.
+
+**DatabaseConnection.java**
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnection {
+    public static Connection getConnection() throws SQLException {
+        try {
+            // Load the MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connect to the database
+            return DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/UserDB", "root", "password");  // Update with your DB credentials
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new SQLException("Error connecting to the database", e);
+        }
+    }
+}
+```
+
+### 3. **Login Servlet**
+
+This servlet will handle the login functionality. It will validate the user's credentials against the database.
+
+**LoginServlet.java**
+
+```java
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class LoginServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // Validate credentials
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Valid user, create session
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                response.sendRedirect("welcome.jsp"); // Redirect to a restricted page
+            } else {
+                // Invalid credentials, show error message
+                request.setAttribute("errorMessage", "Invalid username or password.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 4. **Login JSP (login.jsp)**
+
+This is the login page where users can input their credentials.
+
+**login.jsp**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form action="LoginServlet" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required /><br /><br />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required /><br /><br />
+
+        <input type="submit" value="Login" />
+    </form>
+
+    <c:if test="${not empty errorMessage}">
+        <p style="color: red">${errorMessage}</p>
+    </c:if>
+</body>
+</html>
+```
+
+### 5. **Welcome JSP (welcome.jsp)**
+
+Once authenticated, the user is redirected to a restricted page. We'll create a `welcome.jsp` page that is accessible only to authenticated users.
+
+**welcome.jsp**
+
+```html
+<%@ page import="javax.servlet.http.*,javax.servlet.jsp.*,java.io.*" %>
+<%
+    HttpSession session = request.getSession(false);
+    if (session == null || session.getAttribute("username") == null) {
+        response.sendRedirect("login.jsp"); // Redirect to login page if user is not logged in
+    }
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+    <h2>Welcome, <%= session.getAttribute("username") %>!</h2>
+    <p>You have successfully logged in. This is a restricted page.</p>
+    <a href="logout.jsp">Logout</a>
+</body>
+</html>
+```
+
+### 6. **Logout Servlet (LogoutServlet.java)**
+
+We need to allow users to log out. This servlet will invalidate the session.
+
+**LogoutServlet.java**
+
+```java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class LogoutServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Invalidate the session
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        // Redirect to login page
+        response.sendRedirect("login.jsp");
+    }
+}
+```
+
+### 7. **Restricting Access**
+
+In the `welcome.jsp` file, we've included a check to see if the session exists and if the user is authenticated. If not, the user is redirected to the login page.
+
+Similarly, we can protect any page by checking the session and ensuring that the user is logged in before allowing access.
+
+### 8. **web.xml Configuration**
+
+Map the servlets in your `web.xml` file.
+
+**web.xml**
+
+```xml
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+    
+    <!-- Login Servlet -->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Logout Servlet -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout.jsp</url-pattern>
+    </servlet-mapping>
+    
+</web-app>
+```
+
+### 9. **Steps to Execute**
+
+1. **Set Up MySQL Database**: Make sure your `UserDB` and `users` table are set up in MySQL with some sample user data.
+2. **Deploy the Web Application**: Use your IDE (like IntelliJ IDEA or Eclipse) to deploy the servlet to a servlet container like **Apache Tomcat**.
+3. **Access Login Page**: Visit the login page (`http://localhost:8080/YourAppName/login.jsp`).
+4. **Log In**: Enter the username and password, which will be validated by the `LoginServlet`. If credentials are correct, you will be redirected to the `welcome.jsp` page.
+5. **Logout**: Click the "Logout" link to log out and return to the login page.
+
+### 10. **Expected Workflow**
+
+1. The user visits `login.jsp` and submits the login form.
+2. The `LoginServlet` validates the credentials against the database.
+3. If the credentials are correct, the user is redirected to `welcome.jsp`. If not, an error message is shown.
+4. The user can access restricted pages only if authenticated.
+5. The user can log out, which invalidates the session and redirects them back to the login page.
+
+This approach ensures that only authenticated users can access restricted pages, and the session-based login system helps maintain user authentication across requests.
+
+
+week 10 :
+Hibernate
+For **Week 10**, we will implement **Hibernate Entity Mapping** to represent the `Book` and `User` entities, and map them to their corresponding database tables. Hibernate is a popular ORM (Object-Relational Mapping) tool in Java that simplifies database interactions by mapping Java objects to database tables and vice versa.
+
+### Steps for Hibernate Entity Mapping:
+
+1. **Set Up Hibernate Configuration**: Create the Hibernate configuration file to define the database connection settings.
+2. **Create Entity Classes**: Define the `Book` and `User` entity classes and annotate them with Hibernate annotations.
+3. **Map Entities to Database Tables**: Use Hibernate annotations to map entity classes to the corresponding tables in the database.
+4. **Create Hibernate Utility Class**: Create a utility class to manage the Hibernate session factory and perform database operations.
+
+### 1. **Set Up Hibernate Configuration**
+
+First, you need to configure Hibernate. This configuration file (`hibernate.cfg.xml`) specifies the database connection settings.
+
+**hibernate.cfg.xml**
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+    <!-- JDBC Database connection settings -->
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/YourDatabase</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">password</property>
+
+    <!-- JDBC connection pool settings -->
+    <property name="hibernate.c3p0.min_size">5</property>
+    <property name="hibernate.c3p0.max_size">20</property>
+    <property name="hibernate.c3p0.timeout">300</property>
+    <property name="hibernate.c3p0.max_statements">50</property>
+    <property name="hibernate.c3p0.idle_test_period">3000</property>
+
+    <!-- Specify dialect -->
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+    <!-- Enable Hibernate's automatic session context management -->
+    <property name="hibernate.current_session_context_class">thread</property>
+
+    <!-- Echo all executed queries to stdout -->
+    <property name="hibernate.show_sql">true</property>
+
+    <!-- Drop and re-create the database schema on startup -->
+    <property name="hibernate.hbm2ddl.auto">update</property>
+
+    <!-- Disable the second-level cache -->
+    <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+</hibernate-configuration>
+```
+
+This XML configuration file sets the connection to a MySQL database and defines other Hibernate settings. Make sure to update the `hibernate.connection.url`, `hibernate.connection.username`, and `hibernate.connection.password` with your actual database connection details.
+
+### 2. **Create Entity Classes**
+
+We'll create two entity classes: `Book` and `User`. These classes represent the `books` and `users` tables in the database, respectively.
+
+#### Book Entity Class
+
+**Book.java**
+
+```java
+import javax.persistence.*;
+
+@Entity
+@Table(name = "books")  // Specifies the table name in the database
+public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment primary key
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @Column(name = "author", nullable = false)
+    private String author;
+
+    @Column(name = "genre")
+    private String genre;
+
+    @Column(name = "price", nullable = false)
+    private double price;
+
+    @Column(name = "availability", nullable = false)
+    private String availability;
+
+    // Constructors, getters, and setters
+    public Book() {}
+
+    public Book(String title, String author, String genre, double price, String availability) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.price = price;
+        this.availability = availability;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(String availability) {
+        this.availability = availability;
+    }
+}
+```
+
+#### User Entity Class
+
+**User.java**
+
+```java
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")  // Specifies the table name in the database
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment primary key
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    // Constructors, getters, and setters
+    public User() {}
+
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+### 3. **Map Entities to Database Tables**
+
+In the above classes, we used **JPA annotations** to map the `Book` and `User` entities to their corresponding database tables:
+
+* `@Entity`: Marks the class as a Hibernate entity.
+* `@Table(name = "table_name")`: Specifies the database table name.
+* `@Id`: Denotes the primary key field.
+* `@GeneratedValue(strategy = GenerationType.IDENTITY)`: Specifies that the ID is auto-generated.
+* `@Column`: Maps the class fields to columns in the table.
+
+### 4. **Create Hibernate Utility Class**
+
+We need a utility class to manage the Hibernate session and perform operations like saving, updating, or querying entities.
+
+**HibernateUtil.java**
+
+```java
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class HibernateUtil {
+    
+    private static SessionFactory sessionFactory;
+
+    static {
+        try {
+            // Create a SessionFactory using Hibernate configuration
+            sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+                                                .addAnnotatedClass(Book.class)
+                                                .addAnnotatedClass(User.class)
+                                                .buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public static void shutdown() {
+        getSessionFactory().close();
+    }
+}
+```
+
+### 5. **Test Hibernate Operations**
+
+Finally, let's create a class to test saving a `Book` and `User` entity to the database.
+
+**TestHibernate.java**
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+public class TestHibernate {
+    public static void main(String[] args) {
+        // Get the SessionFactory from HibernateUtil
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        
+        // Create a session
+        Session session = factory.getCurrentSession();
+        
+        try {
+            // Create a new book and user
+            Book book = new Book("Hibernate for Beginners", "John Doe", "Programming", 19.99, "In Stock");
+            User user = new User("john_doe", "password123", "john@example.com");
+
+            // Start a transaction
+            Transaction transaction = session.beginTransaction();
+
+            // Save the book and user objects
+            session.save(book);
+            session.save(user);
+
+            // Commit the transaction
+            transaction.commit();
+
+            System.out.println("Book and User saved successfully!");
+        } finally {
+            // Close the session
+            session.close();
+            HibernateUtil.shutdown();
+        }
+    }
+}
+```
+
+### 6. **Run the Test**
+
+1. **Make sure MySQL is running** and your database (`YourDatabase`) is created.
+2. **Run the Hibernate utility** and `TestHibernate.java` class. This will save a `Book` and `User` into the corresponding tables in the database.
+3. **Verify in MySQL** that the records are inserted into the `books` and `users` tables.
+
+### 7. **Expected Output**
+
+* You should see the console message:
+
+  ```
+  Book and User saved successfully!
+  ```
+* The `books` and `users` tables in the database should now contain the respective records.
+
+This implementation sets up **Hibernate ORM** with entity classes mapped to database tables, enabling easy persistence of objects. The utility class helps manage sessions and transactions, simplifying CRUD operations.
+
+week 11 : 
+CRUD Operations
+For **Week 11**, we will implement **CRUD (Create, Read, Update, Delete) operations** using **Hibernate** for managing **book information** in the database. These operations will allow us to insert, retrieve, update, and delete `Book` entities in the database.
+
+### 1. **Create Book (C in CRUD)**
+
+We will start by implementing the **Create** operation to insert a new `Book` into the database.
+
+### 2. **Read Book (R in CRUD)**
+
+Next, we'll implement the **Read** operation to fetch a `Book` by its ID or fetch all books from the database.
+
+### 3. **Update Book (U in CRUD)**
+
+The **Update** operation will allow us to update a `Book`'s details based on its ID.
+
+### 4. **Delete Book (D in CRUD)**
+
+Finally, the **Delete** operation will allow us to delete a `Book` by its ID.
+
+---
+
+### Steps:
+
+1. **Create CRUD Operations in BookDAO**
+2. **Create a Main Class to Test CRUD Operations**
+
+---
+
+### 1. **Create a DAO (Data Access Object) Class for Book**
+
+We'll create a `BookDAO` class that will contain methods for performing CRUD operations on the `Book` entity.
+
+#### **BookDAO.java**
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
+
+public class BookDAO {
+    
+    private SessionFactory sessionFactory;
+
+    public BookDAO() {
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
+
+    // Create Book
+    public void createBook(Book book) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            session.save(book); // Save the book object to the database
+            transaction.commit();
+            System.out.println("Book saved successfully!");
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    // Read a Book by ID
+    public Book getBookById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Book book = null;
+        try {
+            session.beginTransaction();
+            book = session.get(Book.class, id); // Get the book object by its ID
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return book;
+    }
+
+    // Read All Books
+    public List<Book> getAllBooks() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Book> books = null;
+        try {
+            session.beginTransaction();
+            Query<Book> query = session.createQuery("from Book", Book.class);
+            books = query.getResultList(); // Get all book records
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+    // Update Book
+    public void updateBook(Book book) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(book); // Update the book object in the database
+            transaction.commit();
+            System.out.println("Book updated successfully!");
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    // Delete Book by ID
+    public void deleteBook(int bookId) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Book book = session.get(Book.class, bookId);
+            if (book != null) {
+                session.delete(book); // Delete the book object from the database
+                System.out.println("Book deleted successfully!");
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+}
+```
+
+### 2. **Create a Main Class to Test CRUD Operations**
+
+Now, let's create a main class to test the CRUD operations by interacting with the `BookDAO` class.
+
+#### **TestCRUD.java**
+
+```java
+import java.util.List;
+
+public class TestCRUD {
+    
+    public static void main(String[] args) {
+        // Initialize the BookDAO
+        BookDAO bookDAO = new BookDAO();
+
+        // CREATE - Add a new book
+        Book newBook = new Book("Java Programming", "John Doe", "Programming", 29.99, "In Stock");
+        bookDAO.createBook(newBook);
+
+        // READ - Get a book by ID
+        Book fetchedBook = bookDAO.getBookById(newBook.getId());
+        System.out.println("Fetched Book: " + fetchedBook.getTitle());
+
+        // READ - Get all books
+        List<Book> books = bookDAO.getAllBooks();
+        System.out.println("All Books:");
+        for (Book book : books) {
+            System.out.println(book.getTitle());
+        }
+
+        // UPDATE - Update an existing book
+        fetchedBook.setPrice(34.99);  // Change price
+        bookDAO.updateBook(fetchedBook);
+
+        // DELETE - Delete a book by ID
+        bookDAO.deleteBook(fetchedBook.getId());
+    }
+}
+```
+
+### 3. **Hibernate Utility Class**
+
+Ensure the `HibernateUtil.java` class is still present from the previous steps and properly configured to handle session management.
+
+#### **HibernateUtil.java**
+
+```java
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class HibernateUtil {
+    
+    private static SessionFactory sessionFactory;
+
+    static {
+        try {
+            // Create SessionFactory from hibernate.cfg.xml configuration
+            sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+                                                .addAnnotatedClass(Book.class)
+                                                .buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public static void shutdown() {
+        getSessionFactory().close();
+    }
+}
+```
+
+### 4. **Steps to Run**
+
+1. **Set Up the Database**:
+
+   * Ensure your MySQL database is running and contains the `books` table.
+   * Verify that the `hibernate.cfg.xml` file contains the correct database connection details.
+
+   Example SQL table creation for `books`:
+
+   ```sql
+   CREATE TABLE books (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       title VARCHAR(255),
+       author VARCHAR(255),
+       genre VARCHAR(255),
+       price DOUBLE,
+       availability VARCHAR(50)
+   );
+   ```
+
+2. **Run the `TestCRUD` Class**:
+
+   * When you run the `TestCRUD.java` class, the following operations will occur:
+
+     * A new `Book` will be added to the database (CREATE).
+     * The book will be fetched from the database (READ).
+     * The book's price will be updated (UPDATE).
+     * The book will be deleted from the database (DELETE).
+
+3. **Verify Database Changes**:
+
+   * After running the program, check your database to see the changes:
+
+     * A new book record should be added.
+     * The book's price should be updated.
+     * The book should be deleted.
+
+### Expected Output:
+
+1. When you create a book:
+
+   ```
+   Book saved successfully!
+   ```
+
+2. When you fetch a book by ID:
+
+   ```
+   Fetched Book: Java Programming
+   ```
+
+3. When you fetch all books:
+
+   ```
+   All Books:
+   Java Programming
+   ```
+
+4. When you update a book:
+
+   ```
+   Book updated successfully!
+   ```
+
+5. When you delete a book:
+
+   ```
+   Book deleted successfully!
+   ```
+
+---
+
+### Summary
+
+In this **Week 11** task, we implemented **CRUD operations using Hibernate** for managing book information in a database. We created a `BookDAO` class to handle the operations, and a `TestCRUD` class to test them. The operations were:
+
+* **Create**: Add a new book.
+* **Read**: Fetch a book by its ID or all books.
+* **Update**: Modify an existing book.
+* **Delete**: Remove a book from the database.
+
+With Hibernate, these operations are simplified by using Java annotations and automatic mapping between Java objects and database tables.
+
+
+
+week 12 : 
+Full-Stack Integration
+For **Week 12**, we will implement **Full-Stack Integration** by enhancing the shopping cart functionality. Specifically, we'll integrate **JavaScript with Servlets** to allow users to update their shopping cart dynamically **without a page refresh**. This is typically achieved using **AJAX (Asynchronous JavaScript and XML)** for making asynchronous requests to the server and updating the cart contents dynamically.
+
+### Key Features:
+
+1. **JavaScript Integration**: We'll use JavaScript to update the shopping cart in the frontend without refreshing the page.
+2. **Servlets**: We'll handle the backend logic using a servlet that interacts with the session to manage the shopping cart.
+3. **AJAX**: We'll use AJAX to make asynchronous calls to the servlet for adding, removing, and updating items in the cart.
+
+---
+
+### 1. **Project Structure**
+
+The basic project structure will look like this:
+
+```
+/webapp
+    /WEB-INF
+        /lib
+        /classes
+        /web.xml
+    /resources
+    /js
+        cart.js
+    /views
+        cart.jsp
+    /servlets
+        CartServlet.java
+    /styles
+        style.css
+```
+
+---
+
+### 2. **Create the Cart Servlet**
+
+We'll create a servlet called `CartServlet.java` to handle AJAX requests from the frontend. This servlet will manage the shopping cart using the session.
+
+#### **CartServlet.java**
+
+```java
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+
+public class CartServlet extends HttpServlet {
+
+    // Method to handle adding items to the cart
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
+        // Retrieve cart from session, if it doesn't exist, create a new one
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+            session.setAttribute("cart", cart);
+        }
+
+        // Get item details from the request
+        String itemName = request.getParameter("itemName");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        double price = Double.parseDouble(request.getParameter("price"));
+
+        // Create new cart item
+        CartItem item = new CartItem(itemName, quantity, price);
+
+        // Add item to the cart
+        cart.add(item);
+
+        // Send response back to the client
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.println("{\"status\": \"success\", \"message\": \"Item added to cart\"}");
+        out.flush();
+    }
+
+    // Method to handle retrieving the cart contents
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
+        // Retrieve the cart from the session
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+
+        // Set the response content type
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
+        // Prepare cart data in JSON format
+        if (cart != null) {
+            StringBuilder cartJson = new StringBuilder("[");
+            for (CartItem item : cart) {
+                cartJson.append("{\"name\":\"")
+                        .append(item.getName())
+                        .append("\", \"quantity\":")
+                        .append(item.getQuantity())
+                        .append(", \"price\":")
+                        .append(item.getPrice())
+                        .append("},");
+            }
+            // Remove the last comma and close the array
+            if (cartJson.length() > 1) {
+                cartJson.setLength(cartJson.length() - 1);  // Remove the trailing comma
+            }
+            cartJson.append("]");
+
+            out.println(cartJson.toString());
+        } else {
+            out.println("[]");
+        }
+        out.flush();
+    }
+}
+```
+
+### **Explanation of `CartServlet.java`**:
+
+1. **doPost()**: Handles the addition of items to the shopping cart. It retrieves item details from the request, creates a `CartItem` object, and adds it to the cart stored in the session.
+2. **doGet()**: Retrieves the current shopping cart from the session and sends the cart contents back as a JSON response. This will allow us to update the cart dynamically on the frontend.
+3. **CartItem Class**: Represents an item in the shopping cart.
+
+---
+
+### 3. **Create the CartItem Class**
+
+This class will hold the details for each item in the shopping cart (name, quantity, price).
+
+#### **CartItem.java**
+
+```java
+public class CartItem {
+    private String name;
+    private int quantity;
+    private double price;
+
+    public CartItem(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+}
+```
+
+---
+
+### 4. **Create the Frontend (JSP + JavaScript)**
+
+We will use JSP to display the cart items and JavaScript (AJAX) to interact with the backend without refreshing the page.
+
+#### **cart.jsp**
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Shopping Cart</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/cart.js"></script>
+</head>
+<body>
+    <h2>Your Shopping Cart</h2>
+
+    <div id="cart-items">
+        <!-- Cart items will be displayed here dynamically -->
+    </div>
+
+    <h3>Add Item to Cart</h3>
+    <form id="add-item-form">
+        <label for="item-name">Item Name:</label>
+        <input type="text" id="item-name" name="itemName" required><br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="1" required><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="10.00" step="0.01" required><br>
+        <button type="submit">Add to Cart</button>
+    </form>
+
+    <div id="total"></div>
+</body>
+</html>
+```
+
+#### **cart.js**
+
+```javascript
+$(document).ready(function() {
+    // Load the current cart
+    loadCart();
+
+    // Handle the Add to Cart form submission
+    $("#add-item-form").submit(function(event) {
+        event.preventDefault();
+
+        var itemName = $("#item-name").val();
+        var quantity = $("#quantity").val();
+        var price = $("#price").val();
+
+        // AJAX request to add item to the cart
+        $.ajax({
+            url: 'CartServlet',
+            type: 'POST',
+            data: {
+                itemName: itemName,
+                quantity: quantity,
+                price: price
+            },
+            success: function(response) {
+                loadCart(); // Reload cart items after adding
+            },
+            error: function() {
+                alert("Error adding item to cart.");
+            }
+        });
+    });
+
+    // Load cart items and display them
+    function loadCart() {
+        $.ajax({
+            url: 'CartServlet',
+            type: 'GET',
+            success: function(data) {
+                var cartHTML = '';
+                var totalPrice = 0;
+
+                // Generate HTML for each item in the cart
+                data.forEach(function(item) {
+                    cartHTML += '<p>' + item.name + ' - ' + item.quantity + ' @ $' + item.price.toFixed(2) + '</p>';
+                    totalPrice += item.quantity * item.price;
+                });
+
+                $('#cart-items').html(cartHTML);
+                $('#total').html('Total: $' + totalPrice.toFixed(2));
+            },
+            error: function() {
+                alert("Error loading cart.");
+            }
+        });
+    }
+});
+```
+
+### 5. **Configure Web Deployment Descriptor (web.xml)**
+
+We need to configure the servlet in the `web.xml` file to map the servlet to a URL pattern.
+
+#### **web.xml**
+
+```xml
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/CartServlet</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
+
+---
+
+### 6. **Run the Application**
+
+1. **Run the application** in your servlet container (e.g., Apache Tomcat).
+2. **Navigate to the `cart.jsp` page** in your browser.
+3. **Add items to the cart** using the form. You should see the cart updated dynamically without a page refresh.
+4. **The total price** will be updated accordingly.
+
+### Expected Output:
+
+1. **Cart Display**: As items are added, the cart content will be displayed dynamically.
+2. **Total Price**: The total price will be updated based on the items added to the cart.
+
+---
+
+### Summary
+
+In this **Week 12** task, we implemented **Full-Stack Integration** by integrating **JavaScript** with **Servlets** to create a dynamic shopping cart. We used **AJAX** to interact with the backend servlet without page refresh, allowing users to add items to the cart and view the updated contents immediately.
+
+
+week 13:
+Checkout Process
+For **Week 13**, we will implement the **Checkout Process** in a full-stack Java web application using **Servlets** and **JSP**. The checkout process will allow users to review their shopping cart, enter shipping information, and complete the purchase. We'll follow these steps:
+
+### Key Features:
+
+1. **Review Cart**: Display the current contents of the cart before proceeding to checkout.
+2. **Enter Shipping Information**: Collect user's shipping details like name, address, and contact.
+3. **Complete Purchase**: Finalize the purchase and simulate a transaction (no real payment gateway, but we can simulate order creation and confirmation).
+
+### Steps:
+
+1. **Display Cart for Review**: Create a `review.jsp` page where users can see the items in their cart.
+2. **Shipping Form**: Create a form to enter shipping information.
+3. **Process the Order**: Use a servlet to process the order and finalize the purchase.
+
+---
+
+### 1. **Create CheckoutServlet to Handle Order Process**
+
+We will create a `CheckoutServlet.java` that processes the order, including displaying the cart, receiving shipping information, and simulating a purchase.
+
+#### **CheckoutServlet.java**
+
+```java
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+
+public class CheckoutServlet extends HttpServlet {
+
+    // Display cart contents and shipping form
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+
+        // If cart is empty, redirect to home or shopping page
+        if (cart == null || cart.isEmpty()) {
+            response.sendRedirect("home.jsp");
+            return;
+        }
+
+        // Set cart as request attribute to display it in the JSP
+        request.setAttribute("cart", cart);
+
+        // Forward to checkout page to review the cart
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/checkout.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    // Process checkout form (shipping information)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+
+        // Get shipping details from form
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+
+        if (cart == null || cart.isEmpty() || name == null || address == null || phone == null) {
+            response.sendRedirect("checkout.jsp");
+            return;
+        }
+
+        // Simulate order processing
+        double totalAmount = 0;
+        for (CartItem item : cart) {
+            totalAmount += item.getQuantity() * item.getPrice();
+        }
+
+        // Save order details (this can be saved to a database in a real-world scenario)
+        Order order = new Order(name, address, phone, cart, totalAmount);
+
+        // Clear the cart after purchase
+        session.removeAttribute("cart");
+
+        // Set order details as request attribute to display confirmation
+        request.setAttribute("order", order);
+
+        // Forward to confirmation page
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmation.jsp");
+        dispatcher.forward(request, response);
+    }
+}
+```
+
+### Explanation of `CheckoutServlet.java`:
+
+1. **doGet()**: Displays the cart for review by fetching the cart from the session and forwarding it to `checkout.jsp` for review.
+2. **doPost()**: Processes the order when the user submits the shipping form. It calculates the total price, creates an order, and forwards the user to the confirmation page.
+
+---
+
+### 2. **Create the Order Class**
+
+We need a class to represent the order. This will store the shipping information, cart contents, and total amount.
+
+#### **Order.java**
+
+```java
+import java.util.List;
+
+public class Order {
+    private String name;
+    private String address;
+    private String phone;
+    private List<CartItem> items;
+    private double totalAmount;
+
+    public Order(String name, String address, String phone, List<CartItem> items, double totalAmount) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.items = items;
+        this.totalAmount = totalAmount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public List<CartItem> getItems() {
+        return items;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+}
+```
+
+### Explanation of `Order.java`:
+
+* This class holds the shipping details (name, address, phone), the cart items, and the total amount for the order.
+
+---
+
+### 3. **Create the Checkout Page (checkout.jsp)**
+
+The `checkout.jsp` will allow users to review their cart and enter shipping information.
+
+#### **checkout.jsp**
+
+```jsp
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+</head>
+<body>
+    <h2>Review Your Cart</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="item" items="${cart}">
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+
+    <h3>Shipping Information</h3>
+    <form action="CheckoutServlet" method="post">
+        <label for="name">Full Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" required><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="text" id="phone" name="phone" required><br><br>
+
+        <button type="submit">Complete Purchase</button>
+    </form>
+</body>
+</html>
+```
+
+### Explanation of `checkout.jsp`:
+
+* This page displays the cart contents and a form for collecting shipping information. The cart items are displayed using the `<c:forEach>` tag, and the form submits data to the `CheckoutServlet` via the `POST` method.
+
+---
+
+### 4. **Create the Confirmation Page (confirmation.jsp)**
+
+The `confirmation.jsp` page will display the order summary after the purchase is completed.
+
+#### **confirmation.jsp**
+
+```jsp
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Confirmation</title>
+</head>
+<body>
+    <h2>Order Confirmation</h2>
+    <p>Thank you for your purchase, ${order.name}!</p>
+    <p>Shipping to: ${order.address}</p>
+    <p>Phone: ${order.phone}</p>
+
+    <h3>Order Summary</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="item" items="${order.items}">
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+
+    <h3>Total Amount: $${order.totalAmount}</h3>
+</body>
+</html>
+```
+
+### Explanation of `confirmation.jsp`:
+
+* This page displays a confirmation message with the shipping details and order summary. The `order` object passed from the servlet is used to show the user’s details and the items they purchased.
+
+---
+
+### 5. **Configure the Web Deployment Descriptor (web.xml)**
+
+Ensure the `CheckoutServlet` is configured in the `web.xml` file:
+
+#### **web.xml**
+
+```xml
+<servlet>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <servlet-class>CheckoutServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <url-pattern>/CheckoutServlet</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+### 6. **Test the Checkout Process**
+
+1. **Add items to the cart** using the shopping page.
+2. **Go to the checkout page** and review the cart contents.
+3. **Enter shipping information** and submit the form.
+4. **View the order confirmation** after the purchase is completed.
+
+---
+
+### Expected Output:
+
+1. **Review Cart**: The user sees a summary of the items they are purchasing along with the shipping form.
+2. **Shipping Information**: The user enters their details.
+3. **Confirmation Page**: A confirmation page displays the order summary, including shipping information and the total amount.
+
+---
+
+### Summary
+
+In this **Week 13** task, we implemented the **Checkout Process** using **Servlets** and **JSP**. We created a servlet to handle cart review, shipping information input, and order processing. We also implemented a confirmation page to summarize the purchase. This workflow mimics a real-world e-commerce checkout process.
+
+
+week 14 :
+Deployment and Advanced Features
+For **Week 14**, we will focus on **deploying the online bookstore application to a servlet container (e.g., Apache Tomcat)** on a cloud platform. This process involves preparing your web application for deployment, uploading it to a cloud server, and ensuring it runs smoothly. I'll guide you through the steps for deploying your application to **Apache Tomcat** hosted on **a cloud platform** (e.g., **Heroku**, **AWS EC2**, **Google Cloud**, or **Azure**).
+
+### Steps for Deployment:
+
+1. **Package Your Application**: Create a `.war` file for deployment.
+2. **Set Up Apache Tomcat**: Set up a servlet container (Apache Tomcat) either locally or on a cloud platform.
+3. **Deploy the Application**: Upload and deploy the `.war` file to the server.
+4. **Access the Application**: Ensure the application is accessible via a URL.
+
+### 1. **Package Your Application as a WAR File**
+
+A `.war` (Web Application Archive) file is the standard packaging format for Java web applications.
+
+#### Steps:
+
+1. **In your IDE (Eclipse/IntelliJ)**, right-click on the project folder.
+2. Choose **Export** (in Eclipse) or **Build** (in IntelliJ).
+3. Select **Web Application Archive (WAR)** as the export format.
+4. Choose the destination to save the `.war` file (e.g., `target/online-bookstore.war`).
+
+### 2. **Set Up Apache Tomcat on the Cloud Platform**
+
+Here are steps for deploying your application on **Heroku** and **AWS EC2** as two examples:
+
+#### **Option 1: Deploy to Heroku**
+
+Heroku is a cloud platform that simplifies deployment, especially for Java-based applications.
+
+1. **Create a Heroku Account**:
+
+   * Go to [Heroku](https://www.heroku.com/) and sign up for an account.
+
+2. **Install the Heroku CLI**:
+
+   * Download and install the Heroku CLI from [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
+   * After installation, authenticate with your Heroku account by running `heroku login` in your terminal.
+
+3. **Create a New Heroku Application**:
+
+   * Navigate to your project directory.
+   * Run the following commands:
+
+   ```bash
+   git init
+   heroku create your-app-name
+   ```
+
+4. **Deploy the WAR File**:
+
+   * Create a `Procfile` (required by Heroku to run your application). The file should contain:
+
+   ```
+   web: java -jar target/online-bookstore.war
+   ```
+
+   * Commit and push the changes:
+
+   ```bash
+   git add .
+   git commit -m "Initial commit for deployment"
+   git push heroku master
+   ```
+
+5. **Access the Application**:
+
+   * Once the deployment is successful, you can access your application at `https://your-app-name.herokuapp.com`.
+
+#### **Option 2: Deploy to AWS EC2 (Apache Tomcat)**
+
+1. **Launch an EC2 Instance**:
+
+   * Sign in to your AWS account and launch an EC2 instance with Ubuntu as the operating system.
+   * Choose an instance type, configure the instance, and select a key pair to access it.
+
+2. **Install Apache Tomcat on EC2**:
+
+   * SSH into your EC2 instance:
+
+     ```bash
+     ssh -i "your-key.pem" ubuntu@your-ec2-public-ip
+     ```
+
+   * Install Java:
+
+     ```bash
+     sudo apt update
+     sudo apt install openjdk-11-jdk -y
+     ```
+
+   * Download and install Apache Tomcat:
+
+     ```bash
+     cd /opt
+     sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.45/bin/apache-tomcat-9.0.45.tar.gz
+     sudo tar -xvzf apache-tomcat-9.0.45.tar.gz
+     sudo mv apache-tomcat-9.0.45 tomcat
+     sudo chmod +x tomcat/bin/*.sh
+     ```
+
+   * Start Tomcat:
+
+     ```bash
+     sudo /opt/tomcat/bin/startup.sh
+     ```
+
+3. **Upload Your WAR File**:
+
+   * Copy the `.war` file to the Tomcat `webapps` directory:
+
+   ```bash
+   scp -i "your-key.pem" online-bookstore.war ubuntu@your-ec2-public-ip:/opt/tomcat/webapps/
+   ```
+
+4. **Access the Application**:
+
+   * Once Tomcat is running and the `.war` file is uploaded, you can access your application at:
+
+   ```
+   http://your-ec2-public-ip:8080/online-bookstore
+   ```
+
+---
+
+### 3. **Configure Database (If Needed)**
+
+If your online bookstore application interacts with a database (e.g., MySQL, PostgreSQL), you'll need to ensure the database is accessible from your cloud platform:
+
+#### **For Heroku**:
+
+* You can use Heroku's **PostgreSQL** add-on or **ClearDB MySQL** for database services.
+* Set the **DATABASE\_URL** environment variable to connect your app to the database.
+
+#### **For AWS EC2**:
+
+* You can either set up a database on the same EC2 instance or use Amazon RDS for a more scalable solution.
+* Make sure to adjust your database connection settings in the `web.xml` or application properties files.
+
+---
+
+### 4. **Monitor and Manage the Application**
+
+Once deployed, you can use the following methods to manage your application:
+
+#### **Heroku**:
+
+* Use the **Heroku Dashboard** to monitor and manage the application, view logs, and configure environment variables.
+
+#### **AWS EC2**:
+
+* Use **CloudWatch** for monitoring and logging.
+* SSH into the EC2 instance to manage the Tomcat server or scale your EC2 instance as needed.
+
+---
+
+### 5. **Expected Output**
+
+Once your application is deployed successfully, you should be able to:
+
+1. **Access the application via a cloud URL**.
+2. See the bookstore home page, browse books, add items to the cart, and proceed with checkout.
+3. View order confirmations after purchase.
+4. Have a fully functional online bookstore deployed on a cloud platform.
+
+---
+
+### Summary
+
+In **Week 14**, we covered how to deploy the **online bookstore application** to a servlet container (Apache Tomcat) on a cloud platform such as **Heroku** or **AWS EC2**. The deployment process involved packaging the application as a `.war` file, setting up the server, uploading the file, and configuring any necessary databases. The deployed application is now accessible via a URL and is ready for production use.
+

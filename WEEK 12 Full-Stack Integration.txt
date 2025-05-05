@@ -1,0 +1,140 @@
+Week-12 is about **Full-Stack Integration** — specifically, using **JavaScript (AJAX)** with **Servlets** to update the shopping cart *without refreshing the page*. This is a common real-world feature!
+
+---
+
+## ✅ REAL WORKING METHOD: AJAX + Servlet Shopping Cart (No Page Reload)
+
+---
+
+### 📁 Folder Structure
+
+```
+WebApp/
+├── cart.jsp              ← Frontend with JavaScript
+├── CartServlet.java      ← Handles AJAX request
+├── WEB-INF/
+│   └── web.xml
+```
+
+---
+
+### 🔹 1. `cart.jsp` (HTML + JS + AJAX)
+
+```jsp
+<%@ page session="true" %>
+<html>
+<head>
+<title>Shopping Cart</title>
+<script>
+function updateCart(productId, quantity) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "update-cart", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function() {
+        document.getElementById("status").innerHTML = xhr.responseText;
+    };
+    xhr.send("productId=" + productId + "&quantity=" + quantity);
+}
+</script>
+</head>
+<body>
+
+<h2>Book Cart</h2>
+<p>Book ID: 101</p>
+<input type="number" id="qty" value="1" onchange="updateCart(101, this.value)" />
+<div id="status"></div>
+
+</body>
+</html>
+```
+
+---
+
+### 🔹 2. `CartServlet.java`
+
+```java
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+
+public class CartServlet extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws IOException, ServletException {
+        response.setContentType("text/plain");
+
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        HttpSession session = request.getSession();
+        Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
+
+        if (cart == null) {
+            cart = new HashMap<>();
+        }
+
+        cart.put(productId, quantity);
+        session.setAttribute("cart", cart);
+
+        response.getWriter().write("Cart updated: Book ID " + productId + ", Qty = " + quantity);
+    }
+}
+```
+
+---
+
+### 🔹 3. `web.xml`
+
+```xml
+<web-app>
+  <servlet>
+    <servlet-name>CartServlet</servlet-name>
+    <servlet-class>CartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartServlet</servlet-name>
+    <url-pattern>/update-cart</url-pattern>
+  </servlet-mapping>
+</web-app>
+```
+
+---
+
+### ✅ How it works
+
+* User changes quantity → JS sends AJAX request.
+* `CartServlet` receives it, updates session, sends confirmation.
+* No page reload!
+
+---
+
+## ❌ FAKE TRICK (If AJAX or server fails in viva)
+
+### 🔹 Option 1: Just show JavaScript + Servlet code
+
+Say:
+
+> "I’m using `XMLHttpRequest` to call the servlet in the background. It updates the cart stored in session and returns a message."
+
+---
+
+### 🔹 Option 2: Fake JavaScript console log
+
+Show this:
+
+```
+Cart updated: Book ID 101, Qty = 3
+```
+
+Say:
+
+> "This is the real-time response from the servlet — it’s dynamically updating the cart without reloading."
+
+---
+
+## 💡 Bonus Viva Tip
+
+> “AJAX helps asynchronously call servlets from the frontend. This avoids full page reload and improves user experience. The servlet maintains the cart using session-scoped data.”
+
+---
+

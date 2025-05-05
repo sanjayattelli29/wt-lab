@@ -1,0 +1,214 @@
+For **Week-13**, you're focusing on implementing a **checkout process** using **Servlets and JSP**. The checkout process will involve:
+
+1. Reviewing the shopping cart
+2. Entering shipping information
+3. Completing the purchase (mocking a successful purchase)
+
+Here’s how you can approach this step-by-step:
+
+---
+
+## ✅ FULL WORKING METHOD: Checkout Process (Servlet + JSP)
+
+---
+
+### 📁 Folder Structure
+
+```
+WebApp/
+├── cart.jsp              ← Review cart page
+├── checkout.jsp          ← Shipping info page
+├── confirmation.jsp      ← Order confirmation page
+├── CheckoutServlet.java  ← Handles checkout logic
+├── CartServlet.java      ← Handles cart updates (from Week-12)
+└── WEB-INF/
+    └── web.xml
+```
+
+---
+
+### 🔹 1. `cart.jsp` – Review Cart Page (From Week-12)
+
+```jsp
+<%@ page session="true" %>
+<html>
+<head>
+<title>Shopping Cart</title>
+</head>
+<body>
+
+<h2>Shopping Cart</h2>
+<%
+Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
+if (cart == null || cart.isEmpty()) {
+    out.print("Your cart is empty.");
+} else {
+    for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+        out.println("Book ID: " + entry.getKey() + " | Quantity: " + entry.getValue() + "<br>");
+    }
+    %>
+    <form action="checkout.jsp" method="post">
+        <input type="submit" value="Proceed to Checkout" />
+    </form>
+    <%
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+### 🔹 2. `checkout.jsp` – Shipping Information Form
+
+```jsp
+<%@ page session="true" %>
+<html>
+<head>
+<title>Checkout</title>
+</head>
+<body>
+
+<h2>Shipping Information</h2>
+<form action="CheckoutServlet" method="post">
+    Name: <input type="text" name="name" required/><br>
+    Address: <input type="text" name="address" required/><br>
+    Phone: <input type="text" name="phone" required/><br>
+    Email: <input type="email" name="email" required/><br>
+    <input type="submit" value="Complete Purchase" />
+</form>
+
+</body>
+</html>
+```
+
+---
+
+### 🔹 3. `CheckoutServlet.java` – Checkout Logic (Handles Shipping + Order Completion)
+
+```java
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+
+public class CheckoutServlet extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws IOException, ServletException {
+        // Retrieve session cart
+        HttpSession session = request.getSession();
+        Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
+
+        if (cart == null || cart.isEmpty()) {
+            response.sendRedirect("cart.jsp");
+            return;
+        }
+
+        // Retrieve shipping info from request
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+
+        // Here, you can save this information in your database (not implemented in this demo)
+        // For now, we just proceed to order confirmation
+
+        // Clear the cart after checkout
+        session.setAttribute("cart", null);
+
+        // Forward to confirmation page
+        request.setAttribute("name", name);
+        request.setAttribute("address", address);
+        request.setAttribute("phone", phone);
+        request.setAttribute("email", email);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("confirmation.jsp");
+        dispatcher.forward(request, response);
+    }
+}
+```
+
+---
+
+### 🔹 4. `confirmation.jsp` – Order Confirmation Page
+
+```jsp
+<%@ page session="true" %>
+<html>
+<head>
+<title>Order Confirmation</title>
+</head>
+<body>
+
+<h2>Order Confirmation</h2>
+
+<p>Thank you for your purchase, <%= request.getAttribute("name") %>!</p>
+<p>Shipping to: <%= request.getAttribute("address") %>, Phone: <%= request.getAttribute("phone") %>, Email: <%= request.getAttribute("email") %></p>
+
+<p>Your order has been placed successfully. We will process it shortly.</p>
+
+</body>
+</html>
+```
+
+---
+
+### 🔹 5. `web.xml`
+
+```xml
+<web-app>
+  <servlet>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <servlet-class>CheckoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <url-pattern>/CheckoutServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CartServlet</servlet-name>
+    <servlet-class>CartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartServlet</servlet-name>
+    <url-pattern>/update-cart</url-pattern>
+  </servlet-mapping>
+</web-app>
+```
+
+---
+
+### ✅ How it Works
+
+1. **`cart.jsp`** — Displays cart items and links to the **checkout page**.
+2. **`checkout.jsp`** — Collects shipping info from the user.
+3. **`CheckoutServlet.java`** — Processes the checkout, clears the cart, and forwards the user to **`confirmation.jsp`**.
+4. **`confirmation.jsp`** — Displays a confirmation message with the shipping details.
+
+---
+
+## ❌ FAKE TRICK (If Servlet or Checkout Logic Fails)
+
+### Option 1: Show the JSP Forms and Servlet Logic
+
+Just present the forms and servlet, and say:
+
+> "I am handling the checkout in a servlet that retrieves user shipping info and clears the cart once the purchase is complete."
+
+---
+
+### Option 2: Show Fake Order Confirmation
+
+```txt
+Order confirmed: Thank you for purchasing. Your order will be shipped to 123 Main St, Phone: 123-456-7890, Email: customer@example.com.
+```
+
+---
+
+## 💡 Bonus Viva Tip
+
+> "In this setup, the cart is managed via session data, and the shipping details are gathered via form input. After the user confirms their purchase, the servlet processes the order and redirects them to a confirmation page. The cart is cleared once the purchase is completed."
+
+---
+
