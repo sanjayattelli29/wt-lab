@@ -1,4 +1,35 @@
 
+week 1-4 :
 
-week 1 :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/week%201%20-%204.zip
+
+week 5 XML Structure and Design
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/week%205%20XML%20Structure%20and%20Design.txt
+
+WEEK 6 User Account XML :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%206%20User%20Account%20XML.txt
+
+WEEK 8 Servlet for Book Retrieval :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%208%20Servlet%20for%20Book%20Retrieval.txt
+
+WEEK 9 User Authentication :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%209%20User%20Authentication.txt
+
+WEEK 10 Hibernate :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%2010%20Hibernate.txt
+
+
+WEEK 11 CRUD Operations :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%2011%20CRUD%20Operations.txt
+
+WEEK 12 Full-Stack Integration :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%2012%20Full-Stack%20Integration.txt
+
+
+WEEK 13  Checkout Process :
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%2013%20%20Checkout%20Process.txt
+
+
+WEEK 14 Deployment and Advanced Features:
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/WEEK%2014%20Deployment%20and%20Advanced%20Features.txt
 
