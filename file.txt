@@ -40,6 +40,8 @@ https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/war%20file%20cre
 mysql-password.txt:
 https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/mysql-password.txt
 
+crud-operations.txt only mysql
+
 
 
 sanjayattelli01@gmail.com
