@@ -38,6 +38,7 @@ war file create.txt :
 https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/war%20file%20create.txt
 
 mysql-password.txt:
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/mysql-password.txt
 
 
 
