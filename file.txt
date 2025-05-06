@@ -43,6 +43,8 @@ https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/mysql-password.t
 crud-operations.txt only mysql
 https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/crud.txt
 
+fake-console-print.txt in node execute.js
+
 
 
 sanjayattelli01@gmail.com
