@@ -44,6 +44,7 @@ crud-operations.txt only mysql
 https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/crud.txt
 
 fake-console-print.txt in node execute.js
+https://raw.githubusercontent.com/sanjayattelli29/wt-lab/master/fake-console.txt
 
 
 
